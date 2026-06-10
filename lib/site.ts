@@ -15,7 +15,7 @@ export const GITHUB_URL = "";   // p. ej. "https://github.com/davidwaicode"
 export const WHATSAPP_URL_EN =
   "https://wa.me/34610097562?text=" +
   encodeURIComponent(
-    "Hi David, I've seen your WAI Code website and I'd like to discuss a project."
+    "Hi David, I found WAI Code and I think I may need a custom software or AI solution for my business. Could we talk?"
   );
 
 export const NAV_LINKS = [
