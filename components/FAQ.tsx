@@ -17,7 +17,11 @@ const FAQ_ITEMS: FAQItem[] = [
   },
   {
     q: "¿Con qué tipo de empresas trabajas?",
-    a: "Trabajo principalmente con pymes, startups en crecimiento y emprendedores con un problema de negocio concreto que la tecnología puede resolver. No es necesario ser una gran empresa: si tienes un reto específico y quieres abordarlo con una solución propia, podemos hablar.",
+    a: "Trabajo principalmente con pymes, startups en crecimiento y emprendedores con un problema de negocio concreto que la tecnología puede resolver. Trabajo en remoto, por lo que colaboro con empresas de toda España y de cualquier país hispanohablante sin limitación geográfica. Si tienes un reto específico y quieres abordarlo con una solución propia, podemos hablar.",
+  },
+  {
+    q: "¿Trabajas con empresas fuera de España?",
+    a: "Sí. Trabajo 100% en remoto, así que no hay ninguna limitación geográfica. La mayor parte de mis clientes son españoles, pero también trabajo habitualmente con empresas de México, Argentina, Colombia y otros países de habla hispana. El idioma y la zona horaria son lo único relevante, y el español lo tenemos cubierto.",
   },
   {
     q: "¿Puedo pedir cambios o mejoras durante el desarrollo?",

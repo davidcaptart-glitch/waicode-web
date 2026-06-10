@@ -36,11 +36,11 @@ export default function AvisoLegal() {
             <ul className="mt-4 space-y-2">
               <li>
                 <strong className="font-semibold text-ink">Titular:</strong>{" "}
-                [NOMBRE Y APELLIDOS]
+                David Franco Ruiz
               </li>
               <li>
                 <strong className="font-semibold text-ink">NIF:</strong>{" "}
-                [NIF/DNI]
+                47830220H
               </li>
               <li>
                 <strong className="font-semibold text-ink">Domicilio:</strong>{" "}
@@ -48,7 +48,7 @@ export default function AvisoLegal() {
               </li>
               <li>
                 <strong className="font-semibold text-ink">Contacto:</strong>{" "}
-                WhatsApp +34 610 097 562
+                WhatsApp +34 610 09 75 62
               </li>
               <li>
                 <strong className="font-semibold text-ink">Actividad:</strong>{" "}
@@ -66,7 +66,7 @@ export default function AvisoLegal() {
               El presente Aviso Legal regula el acceso, navegación y uso del
               sitio web{" "}
               <strong className="font-semibold text-ink">waicode.es</strong> (en
-              adelante, "el Sitio Web"). El acceso y uso del Sitio Web implica la
+              adelante, &ldquo;el Sitio Web&rdquo;). El acceso y uso del Sitio Web implica la
               aceptación plena de las presentes condiciones.
             </p>
           </section>

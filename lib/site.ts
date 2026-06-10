@@ -1,6 +1,6 @@
 export const SITE_URL = "https://waicode.es";
 
-export const WHATSAPP_NUMBER = "+34 610 097 562";
+export const WHATSAPP_NUMBER = "+34 610 09 75 62";
 
 export const WHATSAPP_URL =
   "https://wa.me/34610097562?text=" +

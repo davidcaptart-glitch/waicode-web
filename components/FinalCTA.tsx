@@ -3,6 +3,7 @@ import { WHATSAPP_URL } from "@/lib/site";
 import { Eyebrow, SecondaryCTA } from "./Buttons";
 import Reveal from "./Reveal";
 import { ArrowRightIcon, CheckCircleIcon, WhatsAppIcon } from "./icons";
+import WhatsAppLink from "./WhatsAppLink";
 
 const BULLETS = ["Respuesta rápida", "Sin compromiso", "Soluciones a medida"];
 
@@ -54,8 +55,9 @@ export default function FinalCTA() {
 
             <Reveal delay={0.32}>
               <div className="mt-9 flex flex-wrap items-center gap-4 pb-8 sm:pb-12 lg:pb-16">
-                <a
+                <WhatsAppLink
                   href={WHATSAPP_URL}
+                  origin="seccion_final"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group inline-flex items-center gap-3 rounded-full bg-brand-600 py-2.5 pl-5 pr-2.5 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(36,86,228,0.5)] transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-brand-700 hover:shadow-[0_12px_32px_-8px_rgba(36,86,228,0.6)] active:scale-[0.98]"
@@ -65,7 +67,7 @@ export default function FinalCTA() {
                   <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 transition-transform duration-500 group-hover:translate-x-0.5 group-hover:scale-105">
                     <ArrowRightIcon className="h-4 w-4" />
                   </span>
-                </a>
+                </WhatsAppLink>
                 <SecondaryCTA href="#proyectos">Ver proyectos</SecondaryCTA>
               </div>
             </Reveal>

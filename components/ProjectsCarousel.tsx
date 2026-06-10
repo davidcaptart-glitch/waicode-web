@@ -16,23 +16,26 @@ import type { Project } from "@/lib/site";
 import { ArrowRightIcon, CheckCircleIcon, ChevronLeftIcon, ChevronRightIcon } from "./icons";
 
 const EASE = [0.32, 0.72, 0, 1] as const;
-const AUTOPLAY_MS = 6000;
-const RESUME_MS = 8000;
+// Pausa natural entre el fin del vídeo y la transición al siguiente proyecto
+const ADVANCE_DELAY = 300;
 
 /* ------------------------------------------------------------------ */
 /* Video: solo el proyecto activo se reproduce; los laterales quedan   */
 /* pausados mostrando su primer frame (preload="metadata").            */
+/* Sin `loop`: el evento `ended` sincroniza el avance del carrusel.    */
 /* ------------------------------------------------------------------ */
 function CarouselVideo({
   src,
   playing,
   load,
   label,
+  onEnded,
 }: {
   src: string;
   playing: boolean;
   load: boolean;
   label: string;
+  onEnded?: () => void;
 }) {
   const ref = useRef<HTMLVideoElement>(null);
 
@@ -40,11 +43,13 @@ function CarouselVideo({
     const video = ref.current;
     if (!video || !load) return;
     if (playing) {
+      video.currentTime = 0;
       video.play().catch(() => {
         /* autoplay bloqueado: queda el primer frame */
       });
     } else {
       video.pause();
+      video.currentTime = 0;
     }
   }, [playing, load]);
 
@@ -53,11 +58,11 @@ function CarouselVideo({
       ref={ref}
       src={load ? src : undefined}
       muted
-      loop
       playsInline
       preload="metadata"
       disablePictureInPicture
       aria-label={label}
+      onEnded={onEnded}
       className="absolute inset-0 h-full w-full object-cover"
     />
   );
@@ -74,6 +79,7 @@ function ProjectCard({
   sizer = false,
   draggingRef,
   onFocusSide,
+  onVideoEnded,
 }: {
   project: Project;
   isActive: boolean;
@@ -82,6 +88,7 @@ function ProjectCard({
   sizer?: boolean;
   draggingRef?: MutableRefObject<boolean>;
   onFocusSide?: () => void;
+  onVideoEnded?: () => void;
 }) {
   const hover: MotionProps["whileHover"] =
     isActive && !sizer ? { y: -6, scale: 1.015 } : undefined;
@@ -125,6 +132,7 @@ function ProjectCard({
               playing={!!playing}
               load={!!load}
               label={`Vídeo de demostración del proyecto ${project.name}`}
+              onEnded={onVideoEnded}
             />
           )}
         </div>
@@ -199,18 +207,24 @@ export default function ProjectsCarousel({
   const [nearView, setNearView] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
-  const pausedUntil = useRef(0);
+  const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const dragging = useRef(false);
   const reduced = useReducedMotion();
 
-  const go = useCallback(
-    (dir: number) => setActive((a) => (a + dir + count) % count),
-    [count]
-  );
-
-  const interact = useCallback(() => {
-    pausedUntil.current = Date.now() + RESUME_MS;
+  const cancelAdvance = useCallback(() => {
+    if (advanceTimer.current !== null) {
+      clearTimeout(advanceTimer.current);
+      advanceTimer.current = null;
+    }
   }, []);
+
+  const go = useCallback(
+    (dir: number) => {
+      cancelAdvance();
+      setActive((a) => (a + dir + count) % count);
+    },
+    [count, cancelAdvance]
+  );
 
   // breakpoint lg
   useEffect(() => {
@@ -221,7 +235,7 @@ export default function ProjectsCarousel({
     return () => mq.removeEventListener("change", update);
   }, []);
 
-  // visibilidad: nearView precarga vídeos, inView activa autoplay/teclado
+  // nearView precarga vídeos; inView activa sincronización y teclado
   useEffect(() => {
     const stage = stageRef.current;
     if (!stage) return;
@@ -241,30 +255,31 @@ export default function ProjectsCarousel({
     };
   }, []);
 
-  // autoplay cada 6 s, respetando pausas por interacción
+  // Cancelar avance pendiente al salir del viewport
   useEffect(() => {
-    if (!inView || reduced) return;
-    const id = setInterval(() => {
-      if (Date.now() >= pausedUntil.current) go(1);
-    }, AUTOPLAY_MS);
-    return () => clearInterval(id);
-  }, [inView, reduced, go]);
+    if (!inView) cancelAdvance();
+  }, [inView, cancelAdvance]);
 
-  // flechas de teclado mientras el carrusel está a la vista
+  // Flechas de teclado mientras el carrusel está a la vista
   useEffect(() => {
     if (!inView) return;
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "ArrowRight") {
-        go(1);
-        interact();
-      } else if (event.key === "ArrowLeft") {
-        go(-1);
-        interact();
-      }
+      if (event.key === "ArrowRight") go(1);
+      else if (event.key === "ArrowLeft") go(-1);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [inView, go, interact]);
+  }, [inView, go]);
+
+  // Avance disparado por el evento `ended` del vídeo activo.
+  // Espera ADVANCE_DELAY ms para que la transición se perciba natural.
+  const handleVideoEnded = useCallback(() => {
+    if (!inView || reduced) return;
+    advanceTimer.current = setTimeout(() => {
+      advanceTimer.current = null;
+      go(1);
+    }, ADVANCE_DELAY);
+  }, [inView, reduced, go]);
 
   // separación horizontal entre tarjetas, en % del ancho del escenario
   const gapX = isDesktop ? 58 : 100;
@@ -277,7 +292,6 @@ export default function ProjectsCarousel({
         dragElastic={0.12}
         onDragStart={() => {
           dragging.current = true;
-          interact();
         }}
         onDragEnd={(_, info) => {
           if (info.offset.x < -60) go(1);
@@ -286,12 +300,6 @@ export default function ProjectsCarousel({
           setTimeout(() => {
             dragging.current = false;
           }, 60);
-        }}
-        onPointerMove={() => {
-          pausedUntil.current = Math.max(
-            pausedUntil.current,
-            Date.now() + 4000
-          );
         }}
         className="relative cursor-grab overflow-x-clip py-4 active:cursor-grabbing"
       >
@@ -331,9 +339,10 @@ export default function ProjectsCarousel({
                   playing={isActiveCard && inView}
                   draggingRef={dragging}
                   onFocusSide={() => {
+                    cancelAdvance();
                     setActive(i);
-                    interact();
                   }}
+                  onVideoEnded={isActiveCard ? handleVideoEnded : undefined}
                 />
               </div>
             </motion.div>
@@ -345,10 +354,7 @@ export default function ProjectsCarousel({
       <button
         type="button"
         aria-label="Proyecto anterior"
-        onClick={() => {
-          go(-1);
-          interact();
-        }}
+        onClick={() => go(-1)}
         className="absolute left-4 top-1/2 z-20 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-ink shadow-[var(--shadow-float)] ring-1 ring-ink/10 backdrop-blur-sm transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:scale-105 hover:text-brand-600 active:scale-95 lg:flex xl:left-10"
       >
         <ChevronLeftIcon className="h-5 w-5" />
@@ -356,10 +362,7 @@ export default function ProjectsCarousel({
       <button
         type="button"
         aria-label="Proyecto siguiente"
-        onClick={() => {
-          go(1);
-          interact();
-        }}
+        onClick={() => go(1)}
         className="absolute right-4 top-1/2 z-20 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-ink shadow-[var(--shadow-float)] ring-1 ring-ink/10 backdrop-blur-sm transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:scale-105 hover:text-brand-600 active:scale-95 lg:flex xl:right-10"
       >
         <ChevronRightIcon className="h-5 w-5" />
@@ -379,8 +382,8 @@ export default function ProjectsCarousel({
             aria-selected={i === active}
             aria-label={`Ver ${project.name}`}
             onClick={() => {
+              cancelAdvance();
               setActive(i);
-              interact();
             }}
             className={`h-2 rounded-full transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
               i === active

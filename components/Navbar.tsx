@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { NAV_LINKS, WHATSAPP_URL } from "@/lib/site";
 import { ArrowRightIcon } from "./icons";
+import { trackWhatsAppClick } from "@/lib/analytics";
 
 const EASE = [0.32, 0.72, 0, 1] as const;
 
@@ -69,6 +70,7 @@ export default function Navbar() {
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackWhatsAppClick("navbar")}
             className="group hidden items-center gap-2.5 rounded-full bg-brand-600 py-2 pl-5 pr-2 text-sm font-semibold text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-brand-700 active:scale-[0.98] sm:inline-flex"
           >
             Hablemos
@@ -134,7 +136,7 @@ export default function Navbar() {
                   href={WHATSAPP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => setOpen(false)}
+                  onClick={() => { setOpen(false); trackWhatsAppClick("navbar"); }}
                   className="inline-flex items-center gap-3 rounded-full bg-brand-600 px-7 py-3.5 text-base font-semibold text-white"
                 >
                   Hablemos

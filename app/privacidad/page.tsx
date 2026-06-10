@@ -30,13 +30,13 @@ export default function Privacidad() {
             <p className="mt-3">
               WAI Code, operado por{" "}
               <strong className="font-semibold text-ink">
-                [NOMBRE Y APELLIDOS]
+                David Franco Ruiz
               </strong>{" "}
-              (NIF: [NIF/DNI]), con domicilio en España, en adelante "el
-              Responsable".
+              (NIF: 47830220H), con domicilio en España, en adelante &ldquo;el
+              Responsable&rdquo;.
             </p>
             <p className="mt-2">
-              Contacto: WhatsApp +34 610 097 562
+              Contacto: WhatsApp +34 610 09 75 62
             </p>
           </section>
 
@@ -61,7 +61,7 @@ export default function Privacidad() {
               3. Contacto por WhatsApp
             </h2>
             <p className="mt-3">
-              El único canal de contacto habilitado es WhatsApp (+34 610 097 562).
+              El único canal de contacto habilitado es WhatsApp (+34 610 09 75 62).
               Si decides iniciar una conversación, los datos que proporciones
               (número de teléfono, nombre, mensajes) serán tratados con la
               finalidad de gestionar tu consulta.
@@ -121,7 +121,7 @@ export default function Privacidad() {
             <p className="mt-3">
               Puedes ejercer tus derechos de acceso, rectificación, supresión,
               portabilidad, limitación y oposición enviando un mensaje a través de
-              WhatsApp (+34 610 097 562) con el asunto "Derechos RGPD".
+              WhatsApp (+34 610 09 75 62) con el asunto &ldquo;Derechos RGPD&rdquo;.
             </p>
             <p className="mt-3">
               Asimismo, tienes derecho a presentar una reclamación ante la

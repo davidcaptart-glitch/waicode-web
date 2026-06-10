@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { SITE_URL, WHATSAPP_NUMBER, LINKEDIN_URL, GITHUB_URL } from "@/lib/site";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import "./globals.css";
+
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
@@ -83,10 +86,15 @@ const JSON_LD = {
         "@type": "PostalAddress",
         addressCountry: "ES",
       },
-      areaServed: {
-        "@type": "Country",
-        name: "España",
-      },
+      areaServed: [
+        { "@type": "Country", name: "España" },
+        { "@type": "Country", name: "México" },
+        { "@type": "Country", name: "Argentina" },
+        { "@type": "Country", name: "Colombia" },
+        { "@type": "Country", name: "Chile" },
+        { "@type": "Country", name: "Perú" },
+      ],
+      availableLanguage: { "@type": "Language", name: "Spanish", alternateName: "es" },
       founder: {
         "@id": `${SITE_URL}/#david`,
       },
@@ -157,8 +165,9 @@ const JSON_LD = {
       name: "David",
       jobTitle: "Desarrollador de software a medida e inteligencia artificial",
       description:
-        "Fundador de WAI Code. Especializado en software a medida, automatización de procesos e inteligencia artificial aplicada a empresas.",
+        "Fundador de WAI Code. Especializado en software a medida, automatización de procesos e inteligencia artificial aplicada a empresas. Trabaja en remoto con clientes de toda España y países hispanohablantes.",
       worksFor: { "@id": `${SITE_URL}/#organization` },
+      knowsLanguage: { "@type": "Language", name: "Spanish", alternateName: "es" },
       image: `${SITE_URL}/images/david-founder.png`,
       url: SITE_URL,
       ...(SOCIAL_SAME_AS.length > 0 ? { sameAs: SOCIAL_SAME_AS } : {}),
@@ -190,6 +199,7 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${jakarta.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
+        {GA_ID && <GoogleAnalytics gaId={GA_ID} />}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}

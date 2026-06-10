@@ -1,7 +1,8 @@
 import { PROJECTS, WHATSAPP_URL } from "@/lib/site";
-import { Eyebrow, PrimaryCTA, SecondaryCTA } from "./Buttons";
+import { Eyebrow, PrimaryCTA } from "./Buttons";
 import LazyVideo from "./LazyVideo";
 import Reveal from "./Reveal";
+import WhatsAppLink from "./WhatsAppLink";
 
 export default function Hero() {
   return (
@@ -37,14 +38,23 @@ export default function Hero() {
               solución exacta: aplicaciones a medida, automatizaciones de
               negocio e inteligencia artificial aplicada a tu empresa.
             </p>
+            <p className="mt-2.5 max-w-xl text-base leading-relaxed text-slate-550/70">
+              Trabajo en remoto con empresas de toda España y países hispanohablantes.
+            </p>
           </Reveal>
 
           <Reveal delay={0.24}>
             <div className="mt-9 flex flex-wrap items-center gap-4">
               <PrimaryCTA href="#proyectos">Ver proyectos</PrimaryCTA>
-              <SecondaryCTA href={WHATSAPP_URL} external>
+              <WhatsAppLink
+                href={WHATSAPP_URL}
+                origin="hero"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-full border border-ink/10 bg-white px-7 py-3 text-sm font-semibold text-ink transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:border-brand-300 hover:text-brand-700 hover:shadow-[var(--shadow-soft)] active:scale-[0.98]"
+              >
                 Hablemos
-              </SecondaryCTA>
+              </WhatsAppLink>
             </div>
           </Reveal>
 

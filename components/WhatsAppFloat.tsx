@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { WHATSAPP_URL } from "@/lib/site";
 import { WhatsAppIcon } from "./icons";
+import { trackWhatsAppClick } from "@/lib/analytics";
 
 export default function WhatsAppFloat() {
   const reduced = useReducedMotion();
@@ -13,6 +14,7 @@ export default function WhatsAppFloat() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Hablemos por WhatsApp"
+      onClick={() => trackWhatsAppClick("boton_flotante")}
       initial={reduced ? {} : { opacity: 0, scale: 0.6, y: 16 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ duration: 0.7, delay: 1.2, ease: [0.32, 0.72, 0, 1] }}
