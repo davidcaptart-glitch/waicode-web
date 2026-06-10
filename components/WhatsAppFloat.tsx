@@ -1,19 +1,22 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { WHATSAPP_URL } from "@/lib/site";
+import { WHATSAPP_URL, WHATSAPP_URL_EN } from "@/lib/site";
+import { getTranslations, type Locale } from "@/lib/i18n";
 import { WhatsAppIcon } from "./icons";
 import { trackWhatsAppClick } from "@/lib/analytics";
 
-export default function WhatsAppFloat() {
+export default function WhatsAppFloat({ locale = "es" }: { locale?: Locale }) {
   const reduced = useReducedMotion();
+  const waUrl = locale === "en" ? WHATSAPP_URL_EN : WHATSAPP_URL;
+  const label = getTranslations(locale).finalcta.cta1;
 
   return (
     <motion.a
-      href={WHATSAPP_URL}
+      href={waUrl}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Hablemos por WhatsApp"
+      aria-label={label}
       onClick={() => trackWhatsAppClick("boton_flotante")}
       initial={reduced ? {} : { opacity: 0, scale: 0.6, y: 16 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}

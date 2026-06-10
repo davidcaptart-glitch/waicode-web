@@ -1,7 +1,9 @@
 import Image from "next/image";
-import { LEGAL_LINKS, NAV_LINKS } from "@/lib/site";
+import { getTranslations, type Locale } from "@/lib/i18n";
 
-export default function Footer() {
+export default function Footer({ locale = "es" }: { locale?: Locale }) {
+  const t = getTranslations(locale);
+
   return (
     <footer className="border-t border-ink/5 px-4 py-10 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
@@ -16,14 +18,13 @@ export default function Footer() {
               style={{ mixBlendMode: "multiply" }}
             />
             <p className="text-sm text-slate-550">
-              © {new Date().getFullYear()} WAI Code. Soluciones tecnológicas a
-              medida.
+              © {new Date().getFullYear()} WAI Code. {t.footer.tagline}
             </p>
           </div>
 
-          <nav aria-label="Pie de página">
+          <nav aria-label={t.footer.navLabel}>
             <ul className="flex items-center gap-6">
-              {NAV_LINKS.map((link) => (
+              {t.nav.navLinks.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
@@ -38,7 +39,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t border-ink/5 pt-6 sm:justify-start">
-          {LEGAL_LINKS.map((link) => (
+          {t.footer.legalLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}

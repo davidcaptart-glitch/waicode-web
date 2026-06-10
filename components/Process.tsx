@@ -1,18 +1,22 @@
-import { PROCESS_STEPS } from "@/lib/site";
+import { PROCESS_STEPS, PROCESS_STEPS_EN } from "@/lib/site";
+import { getTranslations, type Locale } from "@/lib/i18n";
 import { Eyebrow } from "./Buttons";
 import Reveal from "./Reveal";
 import { ServiceIcon } from "./icons";
 
-export default function Process() {
+export default function Process({ locale = "es" }: { locale?: Locale }) {
+  const t = getTranslations(locale).process;
+  const steps = locale === "en" ? PROCESS_STEPS_EN : PROCESS_STEPS;
+
   return (
     <section id="proceso" className="px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
       <div className="mx-auto max-w-7xl">
         <Reveal>
-          <Eyebrow>Mi proceso</Eyebrow>
+          <Eyebrow>{t.eyebrow}</Eyebrow>
         </Reveal>
         <Reveal delay={0.08}>
           <h2 className="mt-6 text-balance text-3xl font-bold tracking-tight text-ink sm:text-4xl lg:text-[2.75rem]">
-            Así es como trabajo contigo.
+            {t.h2}
           </h2>
         </Reveal>
 
@@ -22,7 +26,7 @@ export default function Process() {
             className="absolute left-0 right-0 top-7 hidden border-t border-dashed border-brand-200 lg:block"
             aria-hidden
           />
-          {PROCESS_STEPS.map((step, i) => (
+          {steps.map((step, i) => (
             <li key={step.title} className="relative">
               <Reveal delay={0.12 * i} y={24}>
                 <div className="flex flex-row items-start gap-5 lg:flex-col lg:items-center lg:gap-0 lg:text-center">

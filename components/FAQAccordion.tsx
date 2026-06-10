@@ -8,7 +8,7 @@ const EASE = [0.32, 0.72, 0, 1] as const;
 
 export type FAQItem = { q: string; a: string };
 
-export default function FAQAccordion({ items }: { items: FAQItem[] }) {
+export default function FAQAccordion({ items }: { items: readonly FAQItem[] }) {
   const [open, setOpen] = useState<number | null>(null);
 
   return (

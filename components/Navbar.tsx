@@ -2,8 +2,10 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { NAV_LINKS, WHATSAPP_URL } from "@/lib/site";
+import { WHATSAPP_URL, WHATSAPP_URL_EN } from "@/lib/site";
+import { getTranslations, type Locale } from "@/lib/i18n";
 import { ArrowRightIcon } from "./icons";
 import { trackWhatsAppClick } from "@/lib/analytics";
 
@@ -13,6 +15,14 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const reduced = useReducedMotion();
+  const pathname = usePathname();
+
+  const isEn = pathname.startsWith("/en");
+  const locale: Locale = isEn ? "en" : "es";
+  const t = getTranslations(locale).nav;
+  const waUrl = isEn ? WHATSAPP_URL_EN : WHATSAPP_URL;
+  const esPath = isEn ? (pathname.slice(3) || "/") : pathname;
+  const enPath = isEn ? pathname : `/en${pathname === "/" ? "" : pathname}`;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -38,7 +48,7 @@ export default function Navbar() {
     >
       <nav
         className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8"
-        aria-label="Principal"
+        aria-label={t.ariaLabel}
       >
         <a href="#inicio" className="flex items-center" aria-label="WAI Code — inicio">
           <Image
@@ -53,7 +63,7 @@ export default function Navbar() {
         </a>
 
         <ul className="hidden items-center gap-8 lg:flex">
-          {NAV_LINKS.map((link) => (
+          {t.navLinks.map((link) => (
             <li key={link.href}>
               <a
                 href={link.href}
@@ -66,14 +76,37 @@ export default function Navbar() {
         </ul>
 
         <div className="flex items-center gap-3">
+          {/* Locale switcher */}
+          <div className="hidden items-center gap-1 text-xs font-semibold lg:flex">
+            <a
+              href={esPath}
+              aria-label="Versión en español"
+              className={`px-1 transition-colors duration-300 ${
+                !isEn ? "text-brand-600" : "text-slate-400 hover:text-ink"
+              }`}
+            >
+              ES
+            </a>
+            <span className="text-ink/20">|</span>
+            <a
+              href={enPath}
+              aria-label="English version"
+              className={`px-1 transition-colors duration-300 ${
+                isEn ? "text-brand-600" : "text-slate-400 hover:text-ink"
+              }`}
+            >
+              EN
+            </a>
+          </div>
+
           <a
-            href={WHATSAPP_URL}
+            href={waUrl}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackWhatsAppClick("navbar")}
             className="group hidden items-center gap-2.5 rounded-full bg-brand-600 py-2 pl-5 pr-2 text-sm font-semibold text-white transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-brand-700 active:scale-[0.98] sm:inline-flex"
           >
-            Hablemos
+            {t.cta}
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/15 transition-transform duration-500 group-hover:translate-x-0.5">
               <ArrowRightIcon className="h-3.5 w-3.5" />
             </span>
@@ -83,7 +116,7 @@ export default function Navbar() {
             type="button"
             onClick={() => setOpen(!open)}
             aria-expanded={open}
-            aria-label={open ? "Cerrar menú" : "Abrir menú"}
+            aria-label={open ? t.closeMenu : t.openMenu}
             className="relative flex h-11 w-11 items-center justify-center rounded-full border border-ink/10 bg-white lg:hidden"
           >
             <span
@@ -110,7 +143,7 @@ export default function Navbar() {
             className="absolute inset-x-0 top-full z-40 h-[calc(100dvh-72px)] overflow-y-auto bg-white/95 backdrop-blur-3xl lg:hidden"
           >
             <ul className="flex flex-col gap-2 px-6 pt-10">
-              {NAV_LINKS.map((link, i) => (
+              {t.navLinks.map((link, i) => (
                 <motion.li
                   key={link.href}
                   initial={reduced ? {} : { opacity: 0, y: 24 }}
@@ -133,15 +166,39 @@ export default function Navbar() {
                 className="pt-6"
               >
                 <a
-                  href={WHATSAPP_URL}
+                  href={waUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => { setOpen(false); trackWhatsAppClick("navbar"); }}
                   className="inline-flex items-center gap-3 rounded-full bg-brand-600 px-7 py-3.5 text-base font-semibold text-white"
                 >
-                  Hablemos
+                  {t.cta}
                   <ArrowRightIcon className="h-4 w-4" />
                 </a>
+              </motion.li>
+              <motion.li
+                initial={reduced ? {} : { opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.36, ease: EASE }}
+                className="pt-4"
+              >
+                <div className="flex items-center gap-3 text-sm font-semibold">
+                  <a
+                    href={esPath}
+                    onClick={() => setOpen(false)}
+                    className={!isEn ? "text-brand-600" : "text-slate-400"}
+                  >
+                    ES
+                  </a>
+                  <span className="text-ink/20">|</span>
+                  <a
+                    href={enPath}
+                    onClick={() => setOpen(false)}
+                    className={isEn ? "text-brand-600" : "text-slate-400"}
+                  >
+                    EN
+                  </a>
+                </div>
               </motion.li>
             </ul>
           </motion.div>

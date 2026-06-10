@@ -1,10 +1,14 @@
-import { PROJECTS, WHATSAPP_URL } from "@/lib/site";
+import { PROJECTS, WHATSAPP_URL, WHATSAPP_URL_EN } from "@/lib/site";
+import { getTranslations, type Locale } from "@/lib/i18n";
 import { Eyebrow, PrimaryCTA } from "./Buttons";
 import LazyVideo from "./LazyVideo";
 import Reveal from "./Reveal";
 import WhatsAppLink from "./WhatsAppLink";
 
-export default function Hero() {
+export default function Hero({ locale = "es" }: { locale?: Locale }) {
+  const t = getTranslations(locale);
+  const waUrl = locale === "en" ? WHATSAPP_URL_EN : WHATSAPP_URL;
+
   return (
     <section id="inicio" className="relative overflow-hidden pt-36 pb-20 lg:pt-44 lg:pb-28">
       {/* ambient backdrop */}
@@ -20,40 +24,38 @@ export default function Hero() {
       <div className="mx-auto grid max-w-7xl items-center gap-14 px-4 sm:px-6 lg:grid-cols-[1fr_1.05fr] lg:gap-12 lg:px-8">
         <div>
           <Reveal>
-            <Eyebrow>Soluciones tecnológicas a medida</Eyebrow>
+            <Eyebrow>{t.hero.eyebrow}</Eyebrow>
           </Reveal>
 
           <Reveal delay={0.08}>
             <h1 className="mt-6 text-balance text-4xl font-bold leading-[1.06] tracking-tight text-ink sm:text-5xl xl:text-[3.6rem]">
-              Transformo problemas de negocio{" "}
+              {t.hero.h1Part1}{" "}
               <span className="text-brand-600">
-                en software a medida, automatizaciones e IA.
+                {t.hero.h1Part2}
               </span>
             </h1>
           </Reveal>
 
           <Reveal delay={0.16}>
             <p className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-slate-550">
-              Analizo tus procesos, identifico ineficiencias y construyo la
-              solución exacta: aplicaciones a medida, automatizaciones de
-              negocio e inteligencia artificial aplicada a tu empresa.
+              {t.hero.subtitle}
             </p>
             <p className="mt-2.5 max-w-xl text-base leading-relaxed text-slate-550/70">
-              Trabajo en remoto con empresas de toda España y países hispanohablantes.
+              {t.hero.geoNote}
             </p>
           </Reveal>
 
           <Reveal delay={0.24}>
             <div className="mt-9 flex flex-wrap items-center gap-4">
-              <PrimaryCTA href="#proyectos">Ver proyectos</PrimaryCTA>
+              <PrimaryCTA href="#proyectos">{t.hero.cta1}</PrimaryCTA>
               <WhatsAppLink
-                href={WHATSAPP_URL}
+                href={waUrl}
                 origin="hero"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center rounded-full border border-ink/10 bg-white px-7 py-3 text-sm font-semibold text-ink transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:border-brand-300 hover:text-brand-700 hover:shadow-[var(--shadow-soft)] active:scale-[0.98]"
               >
-                Hablemos
+                {t.hero.cta2}
               </WhatsAppLink>
             </div>
           </Reveal>
@@ -82,7 +84,7 @@ export default function Hero() {
             <div className="relative overflow-hidden rounded-[calc(2rem-0.5rem)] bg-gradient-to-br from-[#0d1326] via-[#101a38] to-[#0a0e1c] shadow-[inset_0_1px_1px_rgba(255,255,255,0.08)]">
               <LazyVideo
                 src="/videos/intro-personal.mp4"
-                label="Vídeo: David, fundador de WAI Code, trabajando en soluciones"
+                label={t.hero.videoLabel}
                 className="aspect-video w-full object-cover"
               />
             </div>

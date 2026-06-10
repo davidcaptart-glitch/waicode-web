@@ -12,6 +12,12 @@ export const WHATSAPP_URL =
 export const LINKEDIN_URL = ""; // p. ej. "https://www.linkedin.com/in/david-waicode"
 export const GITHUB_URL = "";   // p. ej. "https://github.com/davidwaicode"
 
+export const WHATSAPP_URL_EN =
+  "https://wa.me/34610097562?text=" +
+  encodeURIComponent(
+    "Hi David, I've seen your WAI Code website and I'd like to discuss a project."
+  );
+
 export const NAV_LINKS = [
   { label: "Servicios", href: "#servicios" },
   { label: "Proyectos", href: "#proyectos" },
@@ -34,6 +40,59 @@ export type Project = {
   tags: string[];
   url: string;
 };
+
+export const PROJECTS_EN: Project[] = [
+  {
+    name: "SurfSuite",
+    tagline: "Your entire business connected in a single ecosystem.",
+    description:
+      "Operations, sales, HR, automation and AI in one place, specialized for recruitment and staffing companies. Unifies scattered data, eliminates duplicates and allows teams to operate with greater speed and clarity.",
+    result: "All business areas on a single platform",
+    video: "/videos/surfsuite.mp4",
+    tags: ["SaaS", "Platform", "HR"],
+    url: "https://surfsuite.es",
+  },
+  {
+    name: "Lyra",
+    tagline: "Your AI-powered personal assistant.",
+    description:
+      "Organizes tasks, manages conversations and automates actions to help you reclaim time and focus on what truly matters. Designed to eliminate interruptions and enable deeper, more productive work every day.",
+    result: "Automates repetitive tasks and reclaims time",
+    video: "/videos/lyra.mp4",
+    tags: ["SaaS", "AI", "Automation"],
+    url: "https://lyraissistant.com",
+  },
+  {
+    name: "InduChain",
+    tagline: "The network that connects industry.",
+    description:
+      "Industrial buyers and suppliers meet, validate capabilities and generate real business opportunities within the industrial ecosystem. Reduces qualified supplier search time from weeks to hours.",
+    result: "Industrial supplier search in hours",
+    video: "/videos/induchain.mp4",
+    tags: ["Professional network", "Industry", "B2B"],
+    url: "https://induchain.es",
+  },
+  {
+    name: "Phootflow",
+    tagline: "Thousands of photos processed in minutes.",
+    description:
+      "Automates the selection, editing and delivery of photo sessions with AI so photographers can focus on creating. Processes hundreds of images automatically, drastically reducing post-production time.",
+    result: "Thousands of photos edited automatically with AI",
+    video: "/videos/phootflow.mp4",
+    tags: ["AI", "Automation", "Photography"],
+    url: "https://phootflow.com",
+  },
+  {
+    name: "Benot",
+    tagline: "Custom t-shirts designed for every story.",
+    description:
+      "Design, customize and order unique t-shirts in a few steps: from your own designs to sports collections and charity causes. The customer enjoys a complete customization experience, from design to delivery, in a smooth, frictionless process.",
+    result: "Complete customization from start to finish",
+    video: "/videos/benot.mp4",
+    tags: ["E-commerce", "Customization", "Sports"],
+    url: "https://benot.store",
+  },
+];
 
 export const PROJECTS: Project[] = [
   {
@@ -64,7 +123,7 @@ export const PROJECTS: Project[] = [
     result: "Búsqueda de proveedores industriales en horas",
     video: "/videos/induchain.mp4",
     tags: ["Red profesional", "Industria", "B2B"],
-    url: "https://induchain.com",
+    url: "https://induchain.es",
   },
   {
     name: "Phootflow",
@@ -93,6 +152,19 @@ export type Service = {
   description: string;
   icon: string;
 };
+
+export const SERVICES_EN: Service[] = [
+  { title: "Custom Software", description: "Personalized applications to solve specific business problems.", icon: "code" },
+  { title: "SaaS Platforms", description: "Scalable, multi-tenant products ready to grow with your business.", icon: "layers" },
+  { title: "Automation", description: "We eliminate repetitive tasks and optimize key business processes.", icon: "bolt" },
+  { title: "Internal Tools", description: "Private systems for your team, centralizing and improving operations.", icon: "wrench" },
+  { title: "Marketplaces", description: "Platforms that connect supply and demand efficiently.", icon: "store" },
+  { title: "Client Portals", description: "Personalized spaces for your clients to interact and manage their accounts.", icon: "users" },
+  { title: "CRM", description: "Advanced management of clients, contacts and business opportunities.", icon: "contact" },
+  { title: "ERP", description: "Full control of your business from a single integrated platform.", icon: "grid" },
+  { title: "AI for Business", description: "We integrate artificial intelligence to multiply business results.", icon: "sparkles" },
+  { title: "Integrations", description: "We connect your tools and systems to work together seamlessly.", icon: "plug" },
+];
 
 export const SERVICES: Service[] = [
   {
@@ -162,6 +234,14 @@ export type ProcessStep = {
   description: string;
   icon: string;
 };
+
+export const PROCESS_STEPS_EN: ProcessStep[] = [
+  { title: "Understanding the problem", description: "You tell me how your business works and what you need to improve.", icon: "chat" },
+  { title: "Analyzing options", description: "We find the best way to solve it with the right technology.", icon: "search" },
+  { title: "Designing the solution", description: "I define the architecture, scope and approach to build the best solution.", icon: "pen" },
+  { title: "Building", description: "I develop the system with quality, security and scalability.", icon: "terminal" },
+  { title: "Evolving", description: "We keep improving it together as your business grows.", icon: "trend" },
+];
 
 export const PROCESS_STEPS: ProcessStep[] = [
   {

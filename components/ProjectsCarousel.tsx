@@ -13,6 +13,7 @@ import {
   type MutableRefObject,
 } from "react";
 import type { Project } from "@/lib/site";
+import { getTranslations, type Locale } from "@/lib/i18n";
 import { ArrowRightIcon, CheckCircleIcon, ChevronLeftIcon, ChevronRightIcon } from "./icons";
 
 const EASE = [0.32, 0.72, 0, 1] as const;
@@ -80,6 +81,7 @@ function ProjectCard({
   draggingRef,
   onFocusSide,
   onVideoEnded,
+  ui,
 }: {
   project: Project;
   isActive: boolean;
@@ -89,6 +91,7 @@ function ProjectCard({
   draggingRef?: MutableRefObject<boolean>;
   onFocusSide?: () => void;
   onVideoEnded?: () => void;
+  ui: ReturnType<typeof getTranslations>["carousel"];
 }) {
   const hover: MotionProps["whileHover"] =
     isActive && !sizer ? { y: -6, scale: 1.015 } : undefined;
@@ -102,8 +105,8 @@ function ProjectCard({
       aria-hidden={sizer || undefined}
       aria-label={
         isActive
-          ? `Abrir el proyecto ${project.name} en una pestaña nueva`
-          : `Mostrar el proyecto ${project.name}`
+          ? ui.openProject(project.name)
+          : ui.showProject(project.name)
       }
       onClick={(event) => {
         if (sizer || draggingRef?.current) {
@@ -131,7 +134,7 @@ function ProjectCard({
               src={project.video}
               playing={!!playing}
               load={!!load}
-              label={`Vídeo de demostración del proyecto ${project.name}`}
+              label={ui.videoLabel(project.name)}
               onEnded={onVideoEnded}
             />
           )}
@@ -173,7 +176,7 @@ function ProjectCard({
                 </span>
               </div>
               <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand-600">
-                Ver proyecto
+                {ui.viewProject}
                 <ArrowRightIcon className="h-4 w-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-1" />
               </span>
             </motion.div>
@@ -198,9 +201,12 @@ function ProjectCard({
 /* ------------------------------------------------------------------ */
 export default function ProjectsCarousel({
   projects,
+  locale = "es",
 }: {
   projects: Project[];
+  locale?: Locale;
 }) {
+  const ui = getTranslations(locale).carousel;
   const count = projects.length;
   const [active, setActive] = useState(0);
   const [inView, setInView] = useState(false);
@@ -305,7 +311,7 @@ export default function ProjectsCarousel({
       >
         {/* sizer invisible: fija la altura del escenario */}
         <div className="invisible mx-auto w-[88%] sm:w-[72%] lg:w-[56%]">
-          <ProjectCard project={projects[0]} isActive sizer />
+          <ProjectCard project={projects[0]} isActive sizer ui={ui} />
         </div>
 
         {projects.map((project, i) => {
@@ -343,6 +349,7 @@ export default function ProjectsCarousel({
                     setActive(i);
                   }}
                   onVideoEnded={isActiveCard ? handleVideoEnded : undefined}
+                  ui={ui}
                 />
               </div>
             </motion.div>
@@ -353,7 +360,7 @@ export default function ProjectsCarousel({
       {/* flechas (desktop) */}
       <button
         type="button"
-        aria-label="Proyecto anterior"
+        aria-label={ui.prevProject}
         onClick={() => go(-1)}
         className="absolute left-4 top-1/2 z-20 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-ink shadow-[var(--shadow-float)] ring-1 ring-ink/10 backdrop-blur-sm transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:scale-105 hover:text-brand-600 active:scale-95 lg:flex xl:left-10"
       >
@@ -361,7 +368,7 @@ export default function ProjectsCarousel({
       </button>
       <button
         type="button"
-        aria-label="Proyecto siguiente"
+        aria-label={ui.nextProject}
         onClick={() => go(1)}
         className="absolute right-4 top-1/2 z-20 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-ink shadow-[var(--shadow-float)] ring-1 ring-ink/10 backdrop-blur-sm transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:scale-105 hover:text-brand-600 active:scale-95 lg:flex xl:right-10"
       >
@@ -372,7 +379,7 @@ export default function ProjectsCarousel({
       <div
         className="mt-6 flex items-center justify-center gap-2"
         role="tablist"
-        aria-label="Seleccionar proyecto"
+        aria-label={ui.selectProject}
       >
         {projects.map((project, i) => (
           <button
@@ -380,7 +387,7 @@ export default function ProjectsCarousel({
             type="button"
             role="tab"
             aria-selected={i === active}
-            aria-label={`Ver ${project.name}`}
+            aria-label={ui.viewTab(project.name)}
             onClick={() => {
               cancelAdvance();
               setActive(i);
