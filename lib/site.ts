@@ -17,46 +17,58 @@ export const NAV_LINKS = [
 
 export type Project = {
   name: string;
+  tagline: string;
   description: string;
   video: string;
   tags: string[];
+  url: string;
 };
 
 export const PROJECTS: Project[] = [
   {
     name: "SurfSuite",
+    tagline: "Toda tu empresa conectada en un único ecosistema.",
     description:
-      "La plataforma integral para empresas de recruitment y gestión de personal.",
+      "Operaciones, ventas, RRHH, automatizaciones e inteligencia artificial en un solo lugar, especializado en empresas de recruitment y gestión de personal.",
     video: "/videos/surfsuite.mp4",
-    tags: ["SaaS", "Plataforma"],
+    tags: ["SaaS", "Plataforma", "RRHH"],
+    url: "https://surfsuite.es",
   },
   {
     name: "Lyra",
+    tagline: "Tu asistente personal impulsado por IA.",
     description:
-      "Un asistente con IA que organiza, automatiza y optimiza tu día a día.",
+      "Organiza tareas, gestiona conversaciones y automatiza acciones para ayudarte a recuperar tiempo y centrarte en lo que realmente importa.",
     video: "/videos/lyra.mp4",
-    tags: ["IA", "SaaS"],
+    tags: ["SaaS", "IA", "Automatización"],
+    url: "https://lyraissistant.com",
   },
   {
     name: "InduChain",
+    tagline: "La red que conecta la industria.",
     description:
-      "La red profesional que conecta empresas industriales y genera oportunidades reales.",
+      "Compradores y proveedores industriales se encuentran, validan capacidades y generan oportunidades de negocio reales dentro del ecosistema industrial.",
     video: "/videos/induchain.mp4",
-    tags: ["Red profesional", "Industria"],
+    tags: ["Red profesional", "Industria", "B2B"],
+    url: "https://induchain.com",
   },
   {
     name: "Phootflow",
+    tagline: "Miles de fotografías procesadas en minutos.",
     description:
-      "Selección, edición y entrega automática de fotografías con IA.",
+      "Automatiza la selección, edición y entrega de sesiones fotográficas con inteligencia artificial para que los fotógrafos se centren en crear.",
     video: "/videos/phootflow.mp4",
-    tags: ["IA", "Automatización"],
+    tags: ["IA", "Automatización", "Fotografía"],
+    url: "https://phootflow.com",
   },
   {
     name: "Benot",
+    tagline: "Camisetas personalizadas diseñadas para cada historia.",
     description:
-      "Camisetas personalizadas, deportivas y solidarias diseñadas para cada historia.",
+      "Diseña, personaliza y pide camisetas únicas en pocos pasos: desde diseños propios hasta colecciones deportivas y causas solidarias.",
     video: "/videos/benot.mp4",
-    tags: ["E-commerce", "Personalización"],
+    tags: ["E-commerce", "Personalización", "Deporte"],
+    url: "https://benot.store",
   },
 ];
 
