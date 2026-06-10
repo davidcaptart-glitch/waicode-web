@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
-import { SITE_URL, WHATSAPP_NUMBER } from "@/lib/site";
+import { SITE_URL, WHATSAPP_NUMBER, LINKEDIN_URL, GITHUB_URL } from "@/lib/site";
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -9,9 +9,9 @@ const jakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 
-const TITLE = "WAI Code — Soluciones tecnológicas a medida para empresas";
+const TITLE = "WAI Code — Software a medida, Automatización e IA para Empresas";
 const DESCRIPTION =
-  "Analizo procesos, automatizo tareas y desarrollo software a medida: automatización de procesos, inteligencia artificial para empresas, desarrollo SaaS y herramientas digitales que hacen crecer tu negocio.";
+  "Software a medida, automatización e IA para empresas. Construyo la solución tecnológica exacta que necesitas: aplicaciones, SaaS y herramientas digitales a medida.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -21,12 +21,12 @@ export const metadata: Metadata = {
   },
   description: DESCRIPTION,
   keywords: [
-    "soluciones tecnológicas a medida",
     "software a medida",
     "automatización de procesos",
     "inteligencia artificial para empresas",
     "desarrollo SaaS",
     "herramientas digitales",
+    "soluciones tecnológicas a medida",
   ],
   alternates: {
     canonical: "/",
@@ -43,7 +43,8 @@ export const metadata: Metadata = {
         url: "/images/og.png",
         width: 1200,
         height: 630,
-        alt: "WAI Code — Soluciones tecnológicas a medida",
+        alt: "WAI Code — Software a medida, Automatización e IA",
+        type: "image/png",
       },
     ],
   },
@@ -64,6 +65,8 @@ export const metadata: Metadata = {
   },
 };
 
+const SOCIAL_SAME_AS = [LINKEDIN_URL, GITHUB_URL].filter(Boolean) as string[];
+
 const JSON_LD = {
   "@context": "https://schema.org",
   "@graph": [
@@ -76,19 +79,89 @@ const JSON_LD = {
       image: `${SITE_URL}/images/og.png`,
       description: DESCRIPTION,
       telephone: WHATSAPP_NUMBER,
-      areaServed: "ES",
+      address: {
+        "@type": "PostalAddress",
+        addressCountry: "ES",
+      },
+      areaServed: {
+        "@type": "Country",
+        name: "España",
+      },
       founder: {
-        "@type": "Person",
-        name: "David",
-        jobTitle: "Fundador y desarrollador de soluciones tecnológicas",
+        "@id": `${SITE_URL}/#david`,
       },
       knowsAbout: [
-        "Soluciones tecnológicas a medida",
         "Software a medida",
-        "Automatización de procesos",
+        "Automatización de procesos empresariales",
         "Inteligencia artificial para empresas",
         "Desarrollo SaaS",
+        "Herramientas digitales a medida",
+        "Plataformas tecnológicas",
       ],
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Servicios de desarrollo tecnológico",
+        itemListElement: [
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Software a medida",
+              description:
+                "Aplicaciones personalizadas para resolver problemas específicos de negocio",
+            },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Automatización de procesos",
+              description:
+                "Eliminamos tareas repetitivas y optimizamos procesos clave del negocio",
+            },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Plataformas SaaS",
+              description:
+                "Productos escalables, multitenant y preparados para crecer con tu negocio",
+            },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "IA aplicada al negocio",
+              description:
+                "Integración de inteligencia artificial para multiplicar resultados empresariales",
+            },
+          },
+          {
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: "Herramientas internas",
+              description:
+                "Sistemas privados para equipos que centralizan la operativa y mejoran la eficiencia",
+            },
+          },
+        ],
+      },
+      ...(SOCIAL_SAME_AS.length > 0 ? { sameAs: SOCIAL_SAME_AS } : {}),
+    },
+    {
+      "@type": "Person",
+      "@id": `${SITE_URL}/#david`,
+      name: "David",
+      jobTitle: "Desarrollador de software a medida e inteligencia artificial",
+      description:
+        "Fundador de WAI Code. Especializado en software a medida, automatización de procesos e inteligencia artificial aplicada a empresas.",
+      worksFor: { "@id": `${SITE_URL}/#organization` },
+      image: `${SITE_URL}/images/david-founder.png`,
+      url: SITE_URL,
+      ...(SOCIAL_SAME_AS.length > 0 ? { sameAs: SOCIAL_SAME_AS } : {}),
     },
     {
       "@type": "WebSite",
@@ -97,6 +170,14 @@ const JSON_LD = {
       name: "WAI Code",
       inLanguage: "es-ES",
       publisher: { "@id": `${SITE_URL}/#organization` },
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: `${SITE_URL}/?q={search_term_string}`,
+        },
+        "query-input": "required name=search_term_string",
+      },
     },
   ],
 };

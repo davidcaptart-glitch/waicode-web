@@ -13,7 +13,7 @@ import {
   type MutableRefObject,
 } from "react";
 import type { Project } from "@/lib/site";
-import { ArrowRightIcon, ChevronLeftIcon, ChevronRightIcon } from "./icons";
+import { ArrowRightIcon, CheckCircleIcon, ChevronLeftIcon, ChevronRightIcon } from "./icons";
 
 const EASE = [0.32, 0.72, 0, 1] as const;
 const AUTOPLAY_MS = 6000;
@@ -158,6 +158,12 @@ function ProjectCard({
               <p className="mt-1.5 line-clamp-2 hidden text-sm leading-relaxed text-slate-550 sm:block">
                 {project.description}
               </p>
+              <div className="mt-3 hidden items-center gap-1.5 sm:flex">
+                <CheckCircleIcon className="h-3.5 w-3.5 shrink-0 text-brand-500" />
+                <span className="text-xs font-semibold text-brand-700">
+                  {project.result}
+                </span>
+              </div>
               <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand-600">
                 Ver proyecto
                 <ArrowRightIcon className="h-4 w-4 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-1" />

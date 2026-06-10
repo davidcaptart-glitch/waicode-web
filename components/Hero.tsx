@@ -24,18 +24,18 @@ export default function Hero() {
 
           <Reveal delay={0.08}>
             <h1 className="mt-6 text-balance text-4xl font-bold leading-[1.06] tracking-tight text-ink sm:text-5xl xl:text-[3.6rem]">
-              Transformo problemas complejos.{" "}
+              Transformo problemas de negocio{" "}
               <span className="text-brand-600">
-                En herramientas que funcionan.
+                en software a medida, automatizaciones e IA.
               </span>
             </h1>
           </Reveal>
 
           <Reveal delay={0.16}>
             <p className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-slate-550">
-              Analizo procesos, automatizo tareas y desarrollo soluciones
-              digitales a medida para ayudar a empresas a crecer, ahorrar
-              tiempo y trabajar mejor.
+              Analizo tus procesos, identifico ineficiencias y construyo la
+              solución exacta: aplicaciones a medida, automatizaciones de
+              negocio e inteligencia artificial aplicada a tu empresa.
             </p>
           </Reveal>
 
