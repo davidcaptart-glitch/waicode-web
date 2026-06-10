@@ -67,27 +67,41 @@ public/
 Los textos, proyectos y servicios se editan en un único sitio: [`lib/site.ts`](lib/site.ts).
 El número de WhatsApp y el mensaje predefinido también viven ahí.
 
+## Variables de entorno
+
+| Variable | Descripción | Cuándo |
+| --- | --- | --- |
+| `NEXT_PUBLIC_GA_ID` | Measurement ID de Google Analytics 4 (ej. `G-XXXXXXXXXX`) | Tras crear la propiedad GA4 |
+
+Sin esta variable la web funciona correctamente; Google Analytics simplemente no carga.
+
 ## Despliegue (Vercel recomendado)
 
 ```bash
-# 1. Crear repositorio en GitHub y subir
+# 1. Crear repositorio en GitHub y conectar
 git remote add origin https://github.com/<usuario>/waicode-web.git
 git push -u origin main
 
 # 2. Importar en Vercel (vercel.com/new), framework autodetectado: Next.js
-#    Sin variables de entorno necesarias.
+#    Añadir variable de entorno: NEXT_PUBLIC_GA_ID = G-XXXXXXXXXX (opcional)
+#    Hacer clic en Deploy
 ```
 
 ### Dominio waicode.es (DonDominio)
 
 En el panel de DonDominio → Zona DNS de `waicode.es`:
 
-| Acción | Tipo | Nombre | Valor |
+| Tipo | Nombre | Valor | TTL |
 | --- | --- | --- | --- |
-| Crear | A | `@` | `216.198.79.1` (IP de Vercel) |
-| Crear | CNAME | `www` | `cname.vercel-dns.com.` |
-| Eliminar | A / AAAA / CNAME antiguos de `@` y `www` | — | registros del hosting anterior |
+| `A` | `@` | `76.76.21.21` | 3600 |
+| `CNAME` | `www` | `cname.vercel-dns.com.` | 3600 |
 
-Después, en Vercel → Project → Settings → Domains añadir `waicode.es` y `www.waicode.es` (redirigiendo `www` → apex). Vercel emite el certificado SSL automáticamente al validar el DNS.
+> Vercel muestra los valores exactos en Project → Settings → Domains al añadir el dominio. Si la IP difiere de la indicada, usar la que muestre el panel de Vercel.
 
-> Nota: Vercel muestra la IP exacta del registro A al añadir el dominio; si difiere de la indicada arriba, usar la que muestre el panel.
+En Vercel → Project → Settings → Domains: añadir `waicode.es` y `www.waicode.es` (redirigir `www` → apex). El certificado SSL se emite automáticamente al validar el DNS.
+
+### Google Search Console
+
+1. Añadir propiedad tipo **Dominio** → `waicode.es`
+2. Crear registro TXT en DonDominio: tipo `TXT`, nombre `@`, valor `google-site-verification=XXXX`
+3. Enviar sitemap: `https://waicode.es/sitemap.xml`
