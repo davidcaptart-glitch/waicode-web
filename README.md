@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# WAI Code — Landing corporativa
 
-## Getting Started
+Web corporativa de **WAI Code** ([waicode.es](https://waicode.es)): soluciones tecnológicas a medida para empresas — análisis de problemas de negocio, automatización de procesos, software a medida e inteligencia artificial.
 
-First, run the development server:
+## Stack
+
+- **Next.js 16** (App Router, prerenderizado estático, Turbopack)
+- **TypeScript**
+- **Tailwind CSS 4**
+- **Framer Motion** (microanimaciones y scroll reveal)
+- Tipografía **Plus Jakarta Sans** vía `next/font` (autoalojada, sin FOUT)
+
+## Características
+
+- 100 % estática: sin backend, sin formularios, sin base de datos.
+- Captación exclusivamente por **WhatsApp** (`wa.me/34610097562` con mensaje predefinido). Todos los CTA "Hablemos", la sección final y el botón flotante abren WhatsApp en pestaña nueva.
+- **Vídeos** en autoplay, mute, loop y `playsinline`, sin controles, con carga diferida (`IntersectionObserver`): solo se descargan al acercarse al viewport y se pausan al salir de pantalla.
+- **SEO completo**: metadatos, Open Graph, Twitter Cards, `sitemap.xml`, `robots.txt`, JSON-LD (`ProfessionalService` + `WebSite`), `lang="es"`, canónica sobre `https://waicode.es`.
+- **Accesibilidad**: HTML semántico, `aria-labels`, foco visible, `prefers-reduced-motion` respetado en todas las animaciones.
+- **Core Web Vitals**: página prerenderizada, imágenes optimizadas con `next/image`, animaciones solo con `transform`/`opacity`.
+
+## Desarrollo
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # build de producción
+npm run lint     # ESLint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Estructura
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+app/
+  layout.tsx        # Fuentes, metadatos SEO, JSON-LD
+  page.tsx          # Composición de la home
+  globals.css       # Tokens de diseño (Tailwind 4 @theme)
+  sitemap.ts        # /sitemap.xml
+  robots.ts         # /robots.txt
+  icon.png          # Favicon (generado)
+  apple-icon.png    # Apple touch icon (generado)
+components/
+  Navbar.tsx        # Cabecera fija + menú móvil animado
+  Hero.tsx          # Hero con vídeo intro_personal
+  Approach.tsx      # "No vendo páginas web" + vídeo intro_waicode
+  Services.tsx      # Grid de 10 soluciones
+  Process.tsx       # Timeline de 5 pasos
+  Projects.tsx      # Portfolio bento (5 proyectos con vídeo)
+  FinalCTA.tsx      # "¿Tienes un problema que resolver?" + WhatsApp
+  Footer.tsx
+  WhatsAppFloat.tsx # Botón flotante de WhatsApp
+  LazyVideo.tsx     # Vídeo con lazy loading + pausa fuera de viewport
+  Reveal.tsx        # Scroll reveal con Framer Motion
+  Buttons.tsx       # CTA primario/secundario y eyebrow
+  icons.tsx         # Iconografía SVG propia (trazo fino)
+lib/
+  site.ts           # Constantes: WhatsApp, proyectos, servicios, proceso
+scripts/
+  prepare-images.mjs # Genera logo-mark, og.png y favicons desde el logo
+public/
+  videos/           # Vídeos de la web
+  images/           # Logo, foto del fundador, OG image
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Contenido
 
-## Learn More
+Los textos, proyectos y servicios se editan en un único sitio: [`lib/site.ts`](lib/site.ts).
+El número de WhatsApp y el mensaje predefinido también viven ahí.
 
-To learn more about Next.js, take a look at the following resources:
+## Despliegue (Vercel recomendado)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+# 1. Crear repositorio en GitHub y subir
+git remote add origin https://github.com/<usuario>/waicode-web.git
+git push -u origin main
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# 2. Importar en Vercel (vercel.com/new), framework autodetectado: Next.js
+#    Sin variables de entorno necesarias.
+```
 
-## Deploy on Vercel
+### Dominio waicode.es (DonDominio)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+En el panel de DonDominio → Zona DNS de `waicode.es`:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Acción | Tipo | Nombre | Valor |
+| --- | --- | --- | --- |
+| Crear | A | `@` | `216.198.79.1` (IP de Vercel) |
+| Crear | CNAME | `www` | `cname.vercel-dns.com.` |
+| Eliminar | A / AAAA / CNAME antiguos de `@` y `www` | — | registros del hosting anterior |
+
+Después, en Vercel → Project → Settings → Domains añadir `waicode.es` y `www.waicode.es` (redirigiendo `www` → apex). Vercel emite el certificado SSL automáticamente al validar el DNS.
+
+> Nota: Vercel muestra la IP exacta del registro A al añadir el dominio; si difiere de la indicada arriba, usar la que muestre el panel.
