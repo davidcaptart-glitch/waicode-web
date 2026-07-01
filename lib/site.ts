@@ -92,6 +92,16 @@ export const PROJECTS_EN: Project[] = [
     tags: ["E-commerce", "Customization", "Sports"],
     url: "https://benot.store",
   },
+  {
+    name: "WHAY",
+    tagline: "The advertising that moves with you.",
+    description:
+      "WHAY transforms vehicles into intelligent advertising spaces. A platform that lets any company advertise across specific vehicle zones, making outdoor advertising more flexible, accessible and measurable. A new way to connect brands and drivers through campaigns in motion.",
+    result: "Flexible outdoor advertising on vehicles, measurable by zone",
+    video: "/videos/whay.mp4",
+    tags: ["Advertising", "Mobility", "Marketplace"],
+    url: "https://www.whay.es",
+  },
 ];
 
 export const PROJECTS: Project[] = [
@@ -144,6 +154,16 @@ export const PROJECTS: Project[] = [
     video: "/videos/benot.mp4",
     tags: ["E-commerce", "Personalización", "Deporte"],
     url: "https://benot.store",
+  },
+  {
+    name: "WHAY",
+    tagline: "La publicidad que se mueve contigo.",
+    description:
+      "WHAY transforma vehículos en espacios publicitarios inteligentes. Una plataforma que permite a cualquier empresa anunciarse por zonas concretas del vehículo, haciendo la publicidad exterior más flexible, accesible y medible. Una nueva forma de conectar marcas y conductores mediante campañas en movimiento.",
+    result: "Publicidad exterior en vehículos, flexible y medible por zonas",
+    video: "/videos/whay.mp4",
+    tags: ["Publicidad", "Movilidad", "Marketplace"],
+    url: "https://www.whay.es",
   },
 ];
 
