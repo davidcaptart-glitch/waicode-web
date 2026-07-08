@@ -102,6 +102,16 @@ export const PROJECTS_EN: Project[] = [
     tags: ["Advertising", "Mobility", "Marketplace"],
     url: "https://www.whay.es",
   },
+  {
+    name: "Alcya",
+    tagline: "Smart bookings for businesses that can't afford to waste time.",
+    description:
+      "Alcya is an intelligent booking management platform that centralises all appointments in one place. Customers can book via the website, WhatsApp or voice assistants, while the business keeps its calendar always up to date. The platform automates reminders, reduces calls, prevents no-shows and enables online payments during the booking process.",
+    result: "More bookings, fewer calls, fully automated calendar",
+    video: "/videos/alcya.mp4",
+    tags: ["SaaS", "Bookings", "Automation"],
+    url: "https://alcya.app",
+  },
 ];
 
 export const PROJECTS: Project[] = [
@@ -164,6 +174,16 @@ export const PROJECTS: Project[] = [
     video: "/videos/whay.mp4",
     tags: ["Publicidad", "Movilidad", "Marketplace"],
     url: "https://www.whay.es",
+  },
+  {
+    name: "Alcya",
+    tagline: "Las reservas inteligentes para negocios que no pueden perder tiempo.",
+    description:
+      "Alcya es una plataforma inteligente de gestión de reservas que centraliza todas las citas en un único lugar. Los clientes pueden reservar desde la página web, WhatsApp o asistentes de voz, mientras el negocio mantiene su agenda siempre actualizada. La plataforma automatiza recordatorios, reduce llamadas, evita olvidos y permite aceptar pagos online durante el proceso de reserva.",
+    result: "Más reservas, menos llamadas y agenda completamente automatizada",
+    video: "/videos/alcya.mp4",
+    tags: ["SaaS", "Reservas", "Automatización"],
+    url: "https://alcya.app",
   },
 ];
 
